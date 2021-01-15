@@ -1,0 +1,16 @@
+'
+<?xml version="1.0"?>
+<api batchcomplete="">
+	<continue sroffset="5" continue="-||" />
+	<query>
+		<searchinfo totalhits="27766" />
+		<search>
+			<p ns="0" title="Matrix" pageid="18884" size="4828" wordcount="589" snippet="&lt;span class=&quot;searchmatch&quot;&gt;Matrix&lt;/span&gt; or &lt;span class=&quot;searchmatch&quot;&gt;MATRIX&lt;/span&gt; may refer to: &lt;span class=&quot;searchmatch&quot;&gt;Matrix&lt;/span&gt; (mathematics), a rectangular array of numbers, symbols, or expressions &lt;span class=&quot;searchmatch&quot;&gt;Matrix&lt;/span&gt; (logic), part of a formula in prenex" timestamp="2020-10-01T11:43:29Z" />
+			<p ns="0" title="The Matrix" pageid="30007" size="128512" wordcount="13472" snippet="The &lt;span class=&quot;searchmatch&quot;&gt;Matrix&lt;/span&gt; is a 1999 American science fiction action film written and directed by the Wachowskis, and produced by Joel Silver. It stars Keanu Reeves, Laurence" timestamp="2021-01-12T18:26:21Z" />
+			<p ns="0" title="The Matrix (franchise)" pageid="376228" size="76295" wordcount="6292" snippet="fiction action films beginning with The &lt;span class=&quot;searchmatch&quot;&gt;Matrix&lt;/span&gt; (1999) and continuing with two sequels, The &lt;span class=&quot;searchmatch&quot;&gt;Matrix&lt;/span&gt; Reloaded and The &lt;span class=&quot;searchmatch&quot;&gt;Matrix&lt;/span&gt; Revolutions (both in 2003), all written" timestamp="2021-01-08T03:07:52Z" />
+			<p ns="0" title="Matrix (mathematics)" pageid="20556859" size="109425" wordcount="12506" snippet="In mathematics, a &lt;span class=&quot;searchmatch&quot;&gt;matrix&lt;/span&gt; (plural matrices) is a rectangular array or table of numbers, symbols, or expressions, arranged in rows and columns. For example" timestamp="2020-12-12T03:08:24Z" />
+			<p ns="0" title="Matrix multiplication" pageid="125280" size="42918" wordcount="6545" snippet="columns in the first &lt;span class=&quot;searchmatch&quot;&gt;matrix&lt;/span&gt; must be equal to the number of rows in the second &lt;span class=&quot;searchmatch&quot;&gt;matrix&lt;/span&gt;. The resulting &lt;span class=&quot;searchmatch&quot;&gt;matrix&lt;/span&gt;, known as the &lt;span class=&quot;searchmatch&quot;&gt;matrix&lt;/span&gt; product, has the number" timestamp="2021-01-12T11:41:38Z" />
+		</search>
+	</query>
+</api>
+'
