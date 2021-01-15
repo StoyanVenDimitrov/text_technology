@@ -1,4 +1,3 @@
-'
 <?xml version="1.0"?>
 <api batchcomplete="">
 	<continue sroffset="5" continue="-||" />
@@ -13,4 +12,3 @@
 		</search>
 	</query>
 </api>
-'
