@@ -1,0 +1,4 @@
+#!/usr/bin/env pip install -r
+mysql-connector-python==8.0.23
+requests==2.25.1
+xml-python==0.4.3
