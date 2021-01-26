@@ -1,4 +1,6 @@
 import requests
+import psycopg3
+
 import mysql.connector
 import xml.etree.ElementTree as ET
 from xml.etree.ElementTree import tostring
@@ -26,12 +28,12 @@ def wikimedia_request(search_term):
     R = S.get(url=URL, params=PARAMS)
     return R.text
 
-# ------------SQL--------------
+# ------------ create SQL DB and table --------------
 try:
     # create database wiki_search_results
-    connection = connect(
+    connection = psycopg2.connect(
         host="localhost",
-        user="root",
+        user="postgres"
         # user=input("Enter username: "),
         # password=getpass("Enter password: "),
     )
@@ -43,7 +45,7 @@ except DatabaseError as e:
     # connect if wiki_search_results exists already
     connection = connect(
         host="localhost",
-        user="root",
+        user="postgres",
         database="wiki_search_results",
         # user=input("Enter username: "),
         # password=getpass("Enter password: "),
@@ -79,10 +81,12 @@ except Error as e:
 connection.commit()
 # --------------------
 
+#------------- insert xml content in the SQL table --------
 # write the xml as string:
 tree = ET.parse("data/sample.xml")
 root = tree.getroot()
 # read the element 'p' (at the xml it's the search results)
+# TODO: remove the tags with BeautifulSoup
 vals = [(v.attrib["title"], v.attrib["pageid"], v.attrib["snippet"]) for v in root.iter("p")]
 
 insert_wikis_query = """
@@ -93,5 +97,15 @@ VALUES ( %s, %s, %s )
 
 cursor.executemany(insert_wikis_query, vals)
 connection.commit()
+#-----------------
+
+#--------------SQL full text search ----------
+
+text_query = """
+SELECT title
+FROM wikis
+WHERE to_tsvector('english', snippet) @@ to_tsquery('english', 'array');
+"""
+cursor.execute(text_query)
 
 connection.close()
