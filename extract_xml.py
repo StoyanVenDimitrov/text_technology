@@ -2,6 +2,7 @@ import requests
 import mysql.connector
 import xml.etree.ElementTree as ET
 from xml.etree.ElementTree import tostring
+from bs4 import BeautifulSoup
 from mysql.connector import connect, Error, DatabaseError
 
 
@@ -90,8 +91,11 @@ except Error as e:
 tree = ET.parse("data/sample.xml")
 root = tree.getroot()
 # read the element 'p' (at the xml it's the search results)
-# TODO: remove the tags with BeautifulSoup
-vals = [(v.attrib["title"], v.attrib["pageid"], v.attrib["snippet"]) for v in root.iter("p")]
+vals = list()
+for v in root.iter("p"):
+    soup = BeautifulSoup(v.attrib["snippet"])
+    plain_text_snippet = soup.get_text()
+    vals.append((v.attrib["title"], v.attrib["pageid"], plain_text_snippet))
 
 insert_wikis_query = """
 INSERT INTO wikis
