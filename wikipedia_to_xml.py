@@ -5,7 +5,7 @@ import xml
 from xml.dom import minidom
 
 
-def wikimedia_request(search_term):
+def wikimedia_request(search_term, search_limit):
     """search for content on wikipedia pages
     Args:
     search_term (string)
@@ -21,7 +21,7 @@ def wikimedia_request(search_term):
         "format": "xml",
         "list": "search",
         "srsearch": search_term,
-        "srlimit": 5
+        "srlimit": search_limit
     }
     R = S.get(url=URL, params=PARAMS)
 
@@ -44,6 +44,12 @@ if __name__ == "__main__":
         default="matrix",
         help="Search for this term on Wikipedia",
     )
+    parser.add_argument(
+        "--search_limit",
+        required=False,
+        default=5,
+        help="Number of results from the wikipedia search",
+    )
 
     args = parser.parse_args()
-    wikimedia_request(args.term)
+    wikimedia_request(args.term, args.search_limit)
