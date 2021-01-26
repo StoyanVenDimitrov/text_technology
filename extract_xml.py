@@ -26,8 +26,7 @@ def wikimedia_request(search_term):
     R = S.get(url=URL, params=PARAMS)
     return R.text
 
-# print(wikimedia_request('matrix'))
-
+# ------------SQL--------------
 try:
     # create database wiki_search_results
     connection = connect(
@@ -53,13 +52,46 @@ except DatabaseError as e:
 except Error as e:
     print(e)
 
+try:
+    create_extract_table_query = """
+    CREATE TABLE wikis(
+        title VARCHAR(100),
+        pageid INT,
+        snippet TEXT CHARACTER SET utf8
+    )
+    """
+    cursor.execute(create_extract_table_query)
+except Error as e:
+    # drop old table if the exists:
+    print(e)
+    print("dropping table...")
+    drop_table_query = "DROP TABLE wikis"
+    cursor.execute(drop_table_query)
+    # create new empty table:
+    create_extract_table_query = """
+    CREATE TABLE wikis(
+        title VARCHAR(100),
+        pageid INT,
+        snippet TEXT CHARACTER SET utf8
+    )
+    """
+    cursor.execute(create_extract_table_query)
+connection.commit()
+# --------------------
+
 # write the xml as string:
 tree = ET.parse("data/sample.xml")
 root = tree.getroot()
 # read the element 'p' (at the xml it's the search results)
-for search in root.iter("p"):
-    print(search.attrib.keys())
+vals = [(v.attrib["title"], v.attrib["pageid"], v.attrib["snippet"]) for v in root.iter("p")]
 
+insert_wikis_query = """
+INSERT INTO wikis
+(title, pageid, snippet)
+VALUES ( %s, %s, %s )
+"""
 
+cursor.executemany(insert_wikis_query, vals)
+connection.commit()
 
 connection.close()
