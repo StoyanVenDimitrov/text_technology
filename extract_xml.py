@@ -26,7 +26,7 @@ def wikimedia_request(search_term):
     R = S.get(url=URL, params=PARAMS)
     return R.text
 
-# ------------SQL--------------
+# ------------ create SQL DB and table --------------
 try:
     # create database wiki_search_results
     connection = connect(
@@ -36,8 +36,9 @@ try:
         # password=getpass("Enter password: "),
     )
     create_db = "CREATE DATABASE wiki_search_results"
-    cursor = connection.cursor()
-    cursor.execute(create_db)
+    with connection.cursor() as cursor:
+        cursor.execute(create_db)
+        connection.commit()
 except DatabaseError as e:
     print(e)
     # connect if wiki_search_results exists already
@@ -48,7 +49,6 @@ except DatabaseError as e:
         # user=input("Enter username: "),
         # password=getpass("Enter password: "),
     )
-    cursor = connection.cursor()
 except Error as e:
     print(e)
 
@@ -60,29 +60,37 @@ try:
         snippet TEXT CHARACTER SET utf8
     )
     """
-    cursor.execute(create_extract_table_query)
+    with connection.cursor() as cursor:
+        cursor.execute(create_extract_table_query)
+        connection.commit()
 except Error as e:
     # drop old table if the exists:
     print(e)
     print("dropping table...")
     drop_table_query = "DROP TABLE wikis"
-    cursor.execute(drop_table_query)
+    with connection.cursor() as cursor:
+        cursor.execute(drop_table_query)
+        connection.commit()
     # create new empty table:
     create_extract_table_query = """
     CREATE TABLE wikis(
         title VARCHAR(100),
         pageid INT,
-        snippet TEXT CHARACTER SET utf8
-    )
+        snippet TEXT CHARACTER SET utf8,
+        FULLTEXT (snippet)
+    ) ENGINE=InnoDB;
     """
-    cursor.execute(create_extract_table_query)
-connection.commit()
+    with connection.cursor() as cursor:
+        cursor.execute(create_extract_table_query)
+        connection.commit()
 # --------------------
 
+#------------- insert xml content in the SQL table --------
 # write the xml as string:
 tree = ET.parse("data/sample.xml")
 root = tree.getroot()
 # read the element 'p' (at the xml it's the search results)
+# TODO: remove the tags with BeautifulSoup
 vals = [(v.attrib["title"], v.attrib["pageid"], v.attrib["snippet"]) for v in root.iter("p")]
 
 insert_wikis_query = """
@@ -91,7 +99,20 @@ INSERT INTO wikis
 VALUES ( %s, %s, %s )
 """
 
-cursor.executemany(insert_wikis_query, vals)
-connection.commit()
+with connection.cursor() as cursor:
+    cursor.executemany(insert_wikis_query, vals)
+    connection.commit()
+#-----------------
 
+#--------------SQL full text search ----------
+
+text_query = """
+SELECT title
+FROM wikis
+WHERE Match(snippet) Against('array');
+"""
+with connection.cursor(buffered = True) as cursor:
+    cursor.execute(text_query)
+    result = cursor.fetchall()
+    print(result)
 connection.close()
