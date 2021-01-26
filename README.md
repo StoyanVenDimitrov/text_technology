@@ -15,9 +15,9 @@ pip install -r requirements.pip
 
 Additionally, make sure you have running MySQL v.14.*
 
-##Usage
+## Usage
 Extract an .xml file from wikipedia pages, where the search term occures. Optionally, change the number of results, default is 5. E.g. search for 'matrix' and return the first 10 results:
 ```python
 python wikipedia_to_xml.py --term="matrix" --search_limit=10
 ```
-The resulting .xml file is saved as 'matrix.xml' at the 'xml_single_files' folder. 
+The resulting .xml file is saved as matrix.xml at the xml_single_files folder. 
