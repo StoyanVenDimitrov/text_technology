@@ -84,7 +84,7 @@ except Error as e:
     with connection.cursor() as cursor:
         cursor.execute(create_extract_table_query)
         connection.commit()
-# --------------------
+#-----------------
 
 #------------- insert xml content in the SQL table --------
 # write the xml as string:
@@ -109,7 +109,7 @@ with connection.cursor() as cursor:
 #-----------------
 
 #--------------SQL full text search ----------
-
+# TODO: search for more than one term
 text_query = """
 SELECT title
 FROM wikis
