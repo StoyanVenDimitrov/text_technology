@@ -18,9 +18,7 @@ def create_single_table(file_name):
         # create database wiki_search_results
         connection = connect(
             host="localhost",
-            user="root",
-            # user=input("Enter username: "),
-            # password=getpass("Enter password: "),
+            user="root"
         )
         create_db = "CREATE DATABASE wiki_search_results"
         with connection.cursor() as cursor:
@@ -87,7 +85,6 @@ def create_single_table(file_name):
     (title, pageid, snippet)
     VALUES ( %s, %s, %s )
     """.format(table_name=search_term)
-
     with connection.cursor() as cursor:
         cursor.executemany(insert_wikis_query, vals)
         connection.commit()

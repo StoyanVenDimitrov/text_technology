@@ -17,12 +17,12 @@ def sql_text_search(term, table):
 
     # TODO: search for more than one term
     text_query = """
-    SELECT title
+    SELECT title,
+    MATCH(snippet) AGAINST('{term}' IN NATURAL LANGUAGE MODE) 
     FROM {table}
-    WHERE Match(snippet) Against('array');
-    """.format(table=table)
-
-    # TODO: make use of similarity
+    WHERE MATCH(snippet) AGAINST('{term}' IN NATURAL LANGUAGE MODE);
+    """.format(table=table, term=term)
+    
     with connection.cursor(buffered = True) as cursor:
         cursor.execute(text_query)
         result = cursor.fetchall()

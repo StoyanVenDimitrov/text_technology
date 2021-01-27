@@ -14,8 +14,6 @@ def wikimedia_request(search_term, search_limit):
 
     URL = "https://en.wikipedia.org/w/api.php"
 
-    # SEARCHPAGE = "matrix"
-
     PARAMS = {
         "action": "query",
         "format": "xml",
