@@ -2,7 +2,7 @@ import os
 import requests
 import argparse
 import xml
-from xml.dom import minidom
+from lxml import etree
 
 
 def wikimedia_request(search_term, search_limit):
@@ -26,12 +26,14 @@ def wikimedia_request(search_term, search_limit):
     if not os.path.exists('xml_single_files'):
         os.makedirs('xml_single_files')
     file_name = 'xml_single_files/' + '_'.join(search_term.split()).lower() + '.xml'
-    xml = minidom.parseString(R.text)
-    xml_pretty_str = xml.toprettyxml()
-    with open(file_name, 'w') as f:
-        f.write(xml_pretty_str)
+    r = etree.XML(R.content)
+    with open("data/api.dtd") as f:
+        dtd = etree.DTD(f)
+    if dtd.validate(r) is True:
+        root = etree.XML(R.text)
+        with open(file_name, 'wb') as f:
+            f.write(etree.tostring(root, pretty_print=True, xml_declaration=True, encoding="UTF-8"))
 
-    return R.text
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

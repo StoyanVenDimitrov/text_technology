@@ -16,7 +16,7 @@
             "name": "Request with args",
             "type": "python",
             "request": "launch",
-            "args" : ["--term", "Deep Learning", "--search_limit", "5"],
+            "args" : ["--term", "matrix", "--search_limit", "5"],
             "program": "wikipedia_to_xml.py",
             "console": "integratedTerminal"
         },

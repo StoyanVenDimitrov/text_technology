@@ -1,4 +1,5 @@
 <!ELEMENT api (continue,query)>
+<!ATTLIST api batchcomplete CDATA #REQUIRED>
 <!ELEMENT query (searchinfo, search)>
 <!ELEMENT search (p)+>
 <!ELEMENT continue (#PCDATA)>

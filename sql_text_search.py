@@ -18,12 +18,13 @@ def sql_text_search(term, table):
     # TODO: search for more than one term
     text_query = """
     SELECT title,
-    MATCH(snippet) AGAINST('{term}' IN NATURAL LANGUAGE MODE) 
+    MATCH(snippet) AGAINST('{term}' IN NATURAL LANGUAGE MODE) as score
     FROM {table}
-    WHERE MATCH(snippet) AGAINST('{term}' IN NATURAL LANGUAGE MODE);
+    WHERE MATCH(snippet) AGAINST('{term}' IN NATURAL LANGUAGE MODE)
+    ORDER by score;
     """.format(table=table, term=term)
-    
-    with connection.cursor(buffered = True) as cursor:
+
+    with connection.cursor() as cursor:
         cursor.execute(text_query)
         result = cursor.fetchall()
         print(result)
