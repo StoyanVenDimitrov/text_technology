@@ -1,5 +1,6 @@
-<?xml version="1.0"?>
-<api batchcomplete="">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE api SYSTEM "api.dtd">
+<api>
 	<continue sroffset="5" continue="-||" />
 	<query>
 		<searchinfo totalhits="27766" />
