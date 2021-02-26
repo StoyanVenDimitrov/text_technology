@@ -32,7 +32,15 @@ def wikimedia_request(search_term, search_limit):
     if dtd.validate(r) is True:
         root = etree.XML(R.text)
         with open(file_name, 'wb') as f:
-            f.write(etree.tostring(root, pretty_print=True, xml_declaration=True, encoding="UTF-8"))
+            f.write(
+                etree.tostring(
+                    root, 
+                    pretty_print=True, 
+                    xml_declaration=True, 
+                    encoding="UTF-8")
+            )
+    else:
+        print("No valide XML in the response for ", search_term)
 
 
 if __name__ == "__main__":

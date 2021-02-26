@@ -4,6 +4,11 @@ from mysql.connector import connect, Error, DatabaseError
 
 
 def sql_text_search(term, table):
+    """perform full text search
+    Args:
+    term (string): search term that we are looking for
+    table (string): table name. corresponds to term in whose examples we are searching
+    """
     try:
         connection = connect(
             host="localhost",
@@ -15,7 +20,6 @@ def sql_text_search(term, table):
     except Error as e:
         print(e)
 
-    # TODO: search for more than one term
     text_query = """
     SELECT title,
     MATCH(snippet) AGAINST('{term}' IN NATURAL LANGUAGE MODE) as score

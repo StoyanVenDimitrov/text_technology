@@ -1,15 +1,15 @@
 <!ELEMENT api (continue,query)>
-<!ATTLIST api batchcomplete CDATA #REQUIRED>
 <!ELEMENT query (searchinfo, search)>
 <!ELEMENT search (p)+>
 <!ELEMENT continue (#PCDATA)>
+<!ELEMENT searchinfo EMPTY>
+<!ELEMENT p EMPTY>
+<!ATTLIST api batchcomplete CDATA #REQUIRED>
 <!ATTLIST continue 
 sroffset CDATA #REQUIRED
 continue CDATA #REQUIRED>
 <!ATTLIST query xmlns CDATA #FIXED ' '>
-<!ELEMENT searchinfo EMPTY>
 <!ATTLIST searchinfo totalhits CDATA #REQUIRED>
-<!ELEMENT p EMPTY>
 <!ATTLIST p xmlns CDATA #FIXED ' '
     ns CDATA #REQUIRED
     title CDATA #REQUIRED

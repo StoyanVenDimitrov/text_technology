@@ -20,8 +20,7 @@ Extract an .xml file from wikipedia pages, where the search term occures. Option
 ```python
 python wikipedia_to_xml.py --term="matrix" --search_limit=10
 ```
-The resulting .xml file is saved as matrix.xml at the xml_single_files folder. 
-Validate the .xml file with a DTD grammar
+The resulting .xml file is saved as matrix.xml at the xml_single_files folder, validate the .xml file with a DTD grammar
 
 Translate the content of the XML file in MySQL database:
 ```python
@@ -33,4 +32,4 @@ Perform full text search on the SQL table for a specific term:
 ```python
 python sql_text_search.py --term="array" --table="matrix"
 ```
-This prints the titles of the found wikipedia pages where matrix and array co-occure in the snippet from the search result. 
+This prints the titles of the found wikipedia pages where matrix and array co-occure in the snippet from the search result, together with the similarity score. 

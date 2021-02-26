@@ -7,6 +7,10 @@ from mysql.connector import connect, Error, DatabaseError
 
 
 def create_single_table(file_name):
+    """ Create SQL table for this term
+    Args:
+    file_name (string): path to the table
+    """
     # ------------ create SQL DB and table --------------
     search_term = file_name.split('/')[-1].split('.')[0]
     # read the xml file:
@@ -69,7 +73,6 @@ def create_single_table(file_name):
         with connection.cursor() as cursor:
             cursor.execute(create_extract_table_query)
             connection.commit()
-    #-----------------
 
     #------------- insert xml content in the SQL table --------
     root = tree.getroot()
